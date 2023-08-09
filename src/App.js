@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, Routes, Route, useMatch, useNavigate } from 'react-router-dom'
+import { useField } from './hooks/index'
 
 const Menu = () => {
   const padding = {
@@ -74,18 +75,25 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const contenetInput = useField('text')
+  const authorInput = useField('text')
+  const urlInput = useField('url')
 
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
+      content: contenetInput.value,
+      author: authorInput.value,
+      info: urlInput.value,
       votes: 0,
     })
+  }
+
+  const clearInputValues = (e) => {
+    e.preventDefault()
+    contenetInput.clear()
+    authorInput.clear()
+    urlInput.clear()
   }
 
   return (
@@ -95,28 +103,32 @@ const CreateNew = (props) => {
         <div>
           content
           <input
+            type={contenetInput.type}
             name='content'
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            value={contenetInput.value}
+            onChange={contenetInput.onChange}
           />
         </div>
         <div>
           author
           <input
             name='author'
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={authorInput.value}
+            type={authorInput.type}
+            onChange={authorInput.onChange}
           />
         </div>
         <div>
           url for more info
           <input
-            name='info'
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
+            name='url'
+            value={urlInput.value}
+            type={urlInput.type}
+            onChange={urlInput.onChange}
           />
         </div>
         <button>create</button>
+        <button onClick={clearInputValues}>reset</button>
       </form>
     </div>
   )
@@ -124,6 +136,7 @@ const CreateNew = (props) => {
 
 const App = () => {
   const navigate = useNavigate()
+
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -144,6 +157,7 @@ const App = () => {
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
+    console.log('😇 L-152 in App.js=> ', anecdote)
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
     navigate('/')
