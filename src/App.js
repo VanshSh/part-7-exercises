@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, Routes, Route, useMatch } from 'react-router-dom'
+import { Link, Routes, Route, useMatch, useNavigate } from 'react-router-dom'
 
 const Menu = () => {
   const padding = {
@@ -33,6 +33,13 @@ const AnecdoteList = ({ anecdotes }) => (
   </div>
 )
 
+const SingleAnecdoteContent = ({ anecdote }) => (
+  <div>
+    {anecdote?.content}
+    <br />
+    has: {anecdote?.votes}
+  </div>
+)
 const About = () => (
   <div>
     <h2>About anecdote app</h2>
@@ -116,6 +123,7 @@ const CreateNew = (props) => {
 }
 
 const App = () => {
+  const navigate = useNavigate()
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -138,9 +146,16 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    navigate('/')
+    setNotification(`a new anecdote ${anecdote.content} created`)
   }
 
-  const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
+  function toShowNotifications(message) {
+    setNotification(message)
+    setTimeout(() => {
+      setNotification('')
+    }, 3000)
+  }
 
   const vote = (id) => {
     const anecdote = anecdoteById(id)
@@ -152,6 +167,7 @@ const App = () => {
 
     setAnecdotes(anecdotes.map((a) => (a.id === id ? voted : a)))
   }
+  const anecdoteById = (id) => anecdotes.find((a) => a.id === id)
   const match = useMatch('/anecdotes/:id')
   const anecdote =
     match &&
@@ -160,6 +176,7 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
+      {notification && <p>{notification}</p>}
       <Menu />
       <Routes>
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
@@ -167,7 +184,7 @@ const App = () => {
         <Route path='create' element={<CreateNew addNew={addNew} />} />
         <Route
           path='/anecdotes/:id'
-          element={<AnecdoteList anecdotes={[anecdote]} />}
+          element={<SingleAnecdoteContent anecdote={anecdote} />}
         />
       </Routes>
       <Footer />
