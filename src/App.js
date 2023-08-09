@@ -147,14 +147,14 @@ const App = () => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
     navigate('/')
-    setNotification(`a new anecdote ${anecdote.content} created`)
+    toShowNotifications(`a new anecdote ${anecdote.content} created`)
   }
 
   function toShowNotifications(message) {
     setNotification(message)
     setTimeout(() => {
       setNotification('')
-    }, 3000)
+    }, 1500)
   }
 
   const vote = (id) => {
