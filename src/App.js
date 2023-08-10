@@ -134,7 +134,7 @@ const CreateNew = (props) => {
   )
 }
 
-const App = () => {
+const App = () => { 
   const navigate = useNavigate()
 
   const [anecdotes, setAnecdotes] = useState([
@@ -157,7 +157,6 @@ const App = () => {
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
-    console.log('😇 L-152 in App.js=> ', anecdote)
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
     navigate('/')
