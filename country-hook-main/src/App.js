@@ -14,31 +14,37 @@ const useField = (type) => {
     onChange,
   }
 }
+
 const Country = ({ country }) => {
-  const [showErr, setShowErr] = useState(null)
-  console.log('😇 L-18 in App.js=> ', country)
-  if (country.error) {
-    setShowErr(true)
+  const countryObject = country[0]
+
+  if (!country || !country[0]) {
+    return <div>not found...</div>
   }
+
+  if (country[0]?.error) {
+    return <div>not found...</div>
+  }
+
   return (
     <div>
-      {/* <h3>{country[0]?.name}</h3>
-      <div>capital {country[0]?.capital}</div>
-      <div>population {country[0]?.population}</div>
+      <h3>{countryObject?.name.common}</h3>
+      <div>capital {countryObject?.capital}</div>
+      <div>population {countryObject?.population}</div>
       <img
-        src={country[0]?.flag}
+        src={countryObject?.flags.png}
         height='100'
-        alt={`flag of ${country[0]?.name}`}
-      /> */}
+        alt={`flag of ${countryObject?.name}`}
+      />
     </div>
   )
 }
 
 const App = () => {
   const nameInput = useField('text')
-  const [name, setName] = useState('')
+  const [name, setName] = useState()
   const { countryData } = useCountry(name)
-  console.log('😇 L-37 in App.js=> ', countryData)
+  const arrayOfCountryData = [countryData]
   const fetch = (e) => {
     e.preventDefault()
     setName(nameInput.value)
@@ -50,7 +56,7 @@ const App = () => {
         <input {...nameInput} />
         <button>find</button>
       </form>
-      {countryData ? <Country country={countryData} /> : ''}
+      <Country country={arrayOfCountryData} />
     </div>
   )
 }
