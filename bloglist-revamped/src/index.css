@@ -1,29 +1,27 @@
-.notifications{
-    font-size: 25px;
-    margin-top: 5px;
-    margin-bottom: 0;
-    background-color:rgb(157, 162, 167);
-    padding: 1.2rem;
-    border-radius: 10px;
-    width: 50%;
-    margin:2rem auto;
+.notifications {
+  font-size: 25px;
+  margin-top: 5px;
+  margin-bottom: 0;
+  background-color: rgb(157, 162, 167);
+  padding: 1.2rem;
+  border-radius: 10px;
+  width: 50%;
+  margin: 2rem auto;
 }
-.error{
-    color: red;
-    border:6px solid red
- 
-
+.error {
+  color: red;
+  border: 6px solid red;
 }
 
-.success{
-    color: green;
-    border:6px solid green
+.success {
+  color: green;
+  border: 6px solid green;
 }
 
-.removebtn{
-    background: blue;
-    color:#fff;
-    border-radius: 5px;
-    padding: .2rem 1rem;
-    border:none;
+.removebtn {
+  background: blue;
+  color: #fff;
+  border-radius: 5px;
+  padding: 0.2rem 1rem;
+  border: none;
 }

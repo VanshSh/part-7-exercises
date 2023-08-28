@@ -1,29 +1,29 @@
-import axios from 'axios'
-const baseUrl = '/api/blogs'
+import axios from "axios";
+const baseUrl = "/api/blogs";
 
-let token = null
+let token = null;
 const setToken = (newToken) => {
-  token = `Bearer ${newToken}`
-}
+  token = `Bearer ${newToken}`;
+};
 
 const getAll = async (jwtToken) => {
   let headersList = {
     Authorization: `Bearer ${jwtToken}`,
-  }
+  };
   const request = axios.get(baseUrl, {
-    method: 'GET',
+    method: "GET",
     headers: headersList,
-  })
-  return request.then((response) => response.data)
-}
+  });
+  return request.then((response) => response.data);
+};
 
 const createNewBlog = async (newBlog) => {
   const config = {
     headers: { Authorization: token },
-  }
-  const response = await axios.post(baseUrl, newBlog, config)
-  return response.data
-}
+  };
+  const response = await axios.post(baseUrl, newBlog, config);
+  return response.data;
+};
 
 const updateBlog = async (newBlog, like) => {
   const newBlogObj = {
@@ -32,26 +32,26 @@ const updateBlog = async (newBlog, like) => {
     author: newBlog.author,
     title: newBlog.title,
     url: newBlog.url,
-  }
+  };
   const config = {
     headers: { Authorization: token },
-  }
+  };
   const response = await axios.put(
     `${baseUrl}/${newBlog.id}`,
     newBlogObj,
-    config
-  )
-  return response.data
-}
+    config,
+  );
+  return response.data;
+};
 
 // To delete the blog
 const deleteBlog = async (blogId) => {
   const config = {
     headers: { Authorization: token },
-  }
-  const response = await axios.delete(`${baseUrl}/${blogId}`, config)
-  return response
-}
+  };
+  const response = await axios.delete(`${baseUrl}/${blogId}`, config);
+  return response;
+};
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, setToken, createNewBlog, updateBlog, deleteBlog }
+export default { getAll, setToken, createNewBlog, updateBlog, deleteBlog };
